@@ -1,0 +1,36 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - main
+      - documentation # Adjust the branch name as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x # Specify the desired Python version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Install Sphinx and other dependencies
+        working-directory: docs # Change to your documentation directory
+
+      - name: Build documentation
+        run: |
+          make html  # Replace with your documentation build command
+        working-directory: docs # Change to your documentation directory
+
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_build/html # Replace with the actual path to your documentation output
