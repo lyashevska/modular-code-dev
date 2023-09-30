@@ -1,36 +1,44 @@
-name: Documentation
+# Syntax reference for this file:
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-on:
-  push:
-    branches:
-      - main
-      - documentation # Adjust the branch name as needed
+name: documentation
+on: [push, pull_request]
 
+# https://gist.github.com/c-bata/ed5e7b7f8015502ee5092a3e77937c99
 jobs:
-  build:
+  build-and-delpoy:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      # https://github.com/marketplace/actions/checkout
+      - uses: actions/checkout@v2
+      # https://github.com/marketplace/actions/setup-python
+      # ^-- This gives info on matrix testing.
+      - name: Install Python
+        uses: actions/setup-python@v1
         with:
-          python-version: 3.x # Specify the desired Python version
-
-      - name: Install dependencies
+          python-version: 3.8
+      # I don't know where the "run" thing is documented.
+      - name: Build Sphinx docs
         run: |
-          pip install -r requirements.txt  # Install Sphinx and other dependencies
-        working-directory: docs # Change to your documentation directory
+          make html
 
-      - name: Build documentation
-        run: |
-          make html  # Replace with your documentation build command
-        working-directory: docs # Change to your documentation directory
+      # https://github.com/marketplace/actions/github-pages
+      #- if: success()
+      #  uses: crazy-max/ghaction-github-pages@master
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    target_branch: gh-pages
+      #    build_dir: _build/html/
 
-      - name: Deploy documentation
+      # https://github.com/peaceiris/actions-gh-pages
+      - name: Deploy
+        if: success()
         uses: peaceiris/actions-gh-pages@v3
         with:
+          publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html # Replace with the actual path to your documentation output
+          publish_dir: _build/html/
+# This action probably does everything for you:
+# https://github.com/marketplace/actions/sphinx-build
