@@ -121,14 +121,12 @@ def convert_temperature(temperature, unit):
         celsius = kelvin_to_celsius(temperature)
         fahrenheit = celsius_to_fahrenheit(celsius)
         return celsius, fahrenheit
-    raise ValueError("Invalid unit")
-
 
 if __name__ == "__main__":
-    print(convert_temperature(0, "C"))
-    print(convert_temperature(0, "F"))
-    print(convert_temperature(0, "K"))
+    # print(convert_temperature(0, "C"))
+    # print(convert_temperature(0, "F"))
+    # print(convert_temperature(0, "K"))
     # print(convert_temperature(-500, "K"))
     # print(convert_temperature(-500, "C"))
     # print(convert_temperature(-500, "F"))
-    # print(convert_temperature(0, "X"))
+    print(convert_temperature(-500, "B"))
