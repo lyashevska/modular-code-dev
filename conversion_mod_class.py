@@ -113,7 +113,6 @@ class TemperatureConverter:
             celsius = self.kelvin_to_celsius(temperature)
             fahrenheit = self.celsius_to_fahrenheit(celsius)
             return celsius, fahrenheit
-        raise ValueError("Invalid unit")
 
 
 if __name__ == "__main__":
