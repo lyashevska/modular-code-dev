@@ -123,10 +123,10 @@ def convert_temperature(temperature, unit):
         return celsius, fahrenheit
 
 if __name__ == "__main__":
-    # print(convert_temperature(0, "C"))
+    print(convert_temperature(0, "C"))
     # print(convert_temperature(0, "F"))
     # print(convert_temperature(0, "K"))
     # print(convert_temperature(-500, "K"))
     # print(convert_temperature(-500, "C"))
     # print(convert_temperature(-500, "F"))
-    print(convert_temperature(-500, "B"))
+    # print(convert_temperature(-500, "B"))
